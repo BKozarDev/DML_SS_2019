@@ -23,6 +23,14 @@ public class Movement_Controller : MonoBehaviour
 
     Animator anim;
 
+    [Header("Colliders")]
+    public GameObject hand_L;
+    public GameObject hand_R;
+    public GameObject toe_L;
+    public GameObject toe_R;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,10 +63,14 @@ public class Movement_Controller : MonoBehaviour
     private const float DOUBLE_CLICK_TIME = .2f;
 
     private bool cooldown = false;
+    private bool hit_L = false;
+    private bool hit_R = false;
+    private bool hit = false;
 
     void UpdateInput()
     {
-        if(player && canMove)
+
+        if (player && canMove)
         {
             //Jump
             if (Input.GetKeyDown(KeyCode.W))
@@ -113,9 +125,84 @@ public class Movement_Controller : MonoBehaviour
                     timer = 0;
                     time = 0;
                 }
+
+            }
+
+            if (Input.GetKey(KeyCode.A) && onGround)
+            {
+                anim.SetBool("Move_L", true);
+            } else
+            {
+                anim.SetBool("Move_L", false);
+            }
+            if (Input.GetKey(KeyCode.D) && onGround)
+            {
+                anim.SetBool("Move_R", true);
+            } else
+            {
+                anim.SetBool("Move_R", false);
+            }
+
+            //Animation Hit
+
+            //Hit R
+            if (Input.GetKeyDown(KeyCode.G) && !hit)
+            {
+                hit = true;
+                anim.SetBool("Hit_R", true);
+                Debug.Log("Hit_R");
+                
+            }
+            if (Input.GetKeyUp(KeyCode.G))
+            {
+                hit_R_time = Time.time;
+                hit_R = true;
+            }
+            if (hit_R)
+            {
+                var time = Time.time - hit_R_time;
+                if (time <= 0.5f)
+                {
+                    if (Input.GetKeyDown(KeyCode.G))
+                    {
+                        Debug.Log("Double hit");
+                        anim.SetBool("Hit_L", true);
+                        hit_L_time = Time.time;
+                        hit_L = true;
+                    }
+                }
+                else if(time >= 0.5f)
+                {
+                    anim.SetBool("Hit_R", false);
+                    hit_R = false;
+                    hit = false;
+                }
+                Debug.Log(time);
+            }
+            
+            //Hook L
+            if (Input.GetKeyDown(KeyCode.H))
+            {
+                anim.SetBool("Hit_L", true);
+                hit_L_time = Time.time;
+                hit_L = true;
+                hit = true;
+            } 
+            if (hit_L)
+            {
+                var time = Time.time - hit_L_time;
+                if (time >= 0.5f)
+                {
+                    anim.SetBool("Hit_L", false);
+                    hit_L = false;
+                    hit = false;
+                }
             }
         }
     }
+
+    private float hit_R_time;
+    private float hit_L_time;
 
     private Vector3 newPos;
 
@@ -131,7 +218,6 @@ public class Movement_Controller : MonoBehaviour
             newPos.x += horizontal;
 
             transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * speed);
-
             if (jump && onGround)
             {
                 Jump();
@@ -150,6 +236,11 @@ public class Movement_Controller : MonoBehaviour
             //        MoveRight();
             //    }
             //}
+        }
+
+        if(health <= 0)
+        {
+            Destroy(this.gameObject);
         }
 
         
@@ -199,4 +290,7 @@ public class Movement_Controller : MonoBehaviour
             onGround = true;
         }
     }
+
+    public Collider[] colliders; 
+    
 }
