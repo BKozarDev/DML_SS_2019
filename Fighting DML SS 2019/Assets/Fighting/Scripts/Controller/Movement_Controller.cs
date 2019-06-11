@@ -21,6 +21,8 @@ public class Movement_Controller : MonoBehaviour
 
     private Rigidbody rig;
 
+    Animator anim;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,7 @@ public class Movement_Controller : MonoBehaviour
         //p2 = GameObject.FindGameObjectWithTag("Player2");
 
         rig = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
 
         if(gameObject.tag == "Player1")
         {
