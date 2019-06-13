@@ -45,11 +45,21 @@ public class Movement_Controller : MonoBehaviour
             player = true;
             p1 = this.gameObject;
             p2 = GameObject.FindGameObjectWithTag("Player2");
+
+            //do for all!
+            DisableCollider(hand_R);
+            DisableCollider(hand_L);
+            //DisableCollider(toe_L);
+            //DisableCollider(toe_R);
+
+
         } else if(gameObject.tag == "Player2")
         {
             p2 = this.gameObject;
             p1 = GameObject.FindGameObjectWithTag("Player1");
         }
+
+
     }
 
     // Update is called once per frame
@@ -66,6 +76,8 @@ public class Movement_Controller : MonoBehaviour
     private bool hit_L = false;
     private bool hit_R = false;
     private bool hit = false;
+
+    private bool damage = false;
 
     void UpdateInput()
     {
@@ -150,34 +162,36 @@ public class Movement_Controller : MonoBehaviour
             {
                 hit = true;
                 anim.SetBool("Hit_R", true);
-                Debug.Log("Hit_R");
                 
             }
             if (Input.GetKeyUp(KeyCode.G))
             {
                 hit_R_time = Time.time;
                 hit_R = true;
+                EnableCollider(hand_R);
             }
             if (hit_R)
             {
                 var time = Time.time - hit_R_time;
-                if (time <= 0.5f)
+                if (time <= 0.2f)
                 {
-                    if (Input.GetKeyDown(KeyCode.G))
+                    if (Input.GetKeyDown(KeyCode.G) && hit)
                     {
-                        Debug.Log("Double hit");
                         anim.SetBool("Hit_L", true);
+                        EnableCollider(hand_L);
                         hit_L_time = Time.time;
                         hit_L = true;
+                        hit_R = false;
+                        hit = false;
                     }
                 }
-                else if(time >= 0.5f)
+                else if(time >= 0.2f)
                 {
                     anim.SetBool("Hit_R", false);
                     hit_R = false;
+                    DisableCollider(hand_R);
                     hit = false;
                 }
-                Debug.Log(time);
             }
             
             //Hook L
@@ -186,15 +200,23 @@ public class Movement_Controller : MonoBehaviour
                 anim.SetBool("Hit_L", true);
                 hit_L_time = Time.time;
                 hit_L = true;
+                EnableCollider(hand_L);
                 hit = true;
             } 
             if (hit_L)
             {
                 var time = Time.time - hit_L_time;
-                if (time >= 0.5f)
+                if (time <= 0.2f)
+                {
+                    if (Input.GetKeyDown(KeyCode.G))
+                    {
+                        hit = false;
+                    }
+                } else 
                 {
                     anim.SetBool("Hit_L", false);
                     hit_L = false;
+                    DisableCollider(hand_L);
                     hit = false;
                 }
             }
@@ -243,6 +265,20 @@ public class Movement_Controller : MonoBehaviour
             Destroy(this.gameObject);
         }
 
+        if (damage)
+        {
+            float timer = 0;
+            var time = Time.time - timer;
+
+            Debug.Log(time);
+
+            if(time >= 0.4f)
+            {
+                anim.SetBool("Damage", false);
+                damage = false;
+            }
+            timer = Time.time;
+        }
         
     }
 
@@ -274,11 +310,11 @@ public class Movement_Controller : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, newPos, Time.deltaTime * speed);
     }
 
-    private float slide_Vel = 3f;
+    private float slide_Vel = 10f;
 
     void Dash(int dir)
     {
-            rig.AddForce(new Vector3(dir, 0, 0) * slide_Vel, ForceMode.VelocityChange);
+            rig.AddForce(new Vector3(dir, 0, 0) * slide_Vel, ForceMode.Impulse);
     }
 
 
@@ -293,4 +329,34 @@ public class Movement_Controller : MonoBehaviour
 
     public Collider[] colliders; 
     
+    void EnableCollider(GameObject go)
+    {
+        go.GetComponent<BoxCollider>().enabled = true;
+    }
+
+    void DisableCollider(GameObject go)
+    {
+        go.GetComponent<BoxCollider>().enabled = false;
+    }
+
+    public void Hit()
+    {
+        if (player)
+        {
+            p2.GetComponent<Movement_Controller>().Damage();
+            Debug.Log("Damage");
+        } else
+        {
+            Damage();
+        }
+    }
+
+    void Damage()
+    {
+        anim.SetBool("Damage", true);
+        health -= 10;
+        damage = true;
+    }
+
+
 }

@@ -4,8 +4,21 @@ using UnityEngine;
 
 public class Hurtbox_Collider : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    GameObject p;
+
+    private void Start()
     {
-        transform.parent.GetComponent<Movement_Controller>().CollisionDetected(this);
+        p = GameObject.FindWithTag("Player1");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("AAHH");
+        Debug.Log(other.gameObject.tag);
+
+        
+            Debug.Log("ASD");
+            p.GetComponent<Movement_Controller>().Hit();
+        
     }
 }
