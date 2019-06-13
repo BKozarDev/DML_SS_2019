@@ -23,7 +23,6 @@ public class StateManager : MonoBehaviour
     public bool lookRight;
 
     //public Slider healthSlider;
-    Movement_Controller move;
 
     [HideInInspector]
     public HandleDamageColliders handleDC;
@@ -41,7 +40,6 @@ public class StateManager : MonoBehaviour
         handleDC = GetComponent<HandleDamageColliders>();
         handleAnim = GetComponent<HandleAnimations>();
         handleMovement = GetComponent<HandleMovement>();
-        move = GetComponent<Movement_Controller>();
         blood = GetComponentInChildren<ParticleSystem>();
     }
 

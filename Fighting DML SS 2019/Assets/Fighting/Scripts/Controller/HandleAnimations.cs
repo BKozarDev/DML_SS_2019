@@ -22,9 +22,9 @@ public class HandleAnimations : MonoBehaviour
     {
         states.dontMove = anim.GetBool("DontMove");
 
-        anim.SetBool("TakeHit", states.gettingHit);
+        anim.SetBool("TakesHit", states.gettingHit);
         anim.SetBool("OnAir", !states.onGround);
-        anim.SetBool("Crouch", states.crouch);
+        //anim.SetBool("Crouch", states.crouch);
 
         float movement = (states.lookRight) ? states.horizontal : -states.horizontal;
         anim.SetFloat("Movement", movement);

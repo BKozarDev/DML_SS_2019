@@ -12,7 +12,7 @@ public class HandleMovementCollider_ASB : StateMachineBehaviour
     {
         if(states == null)
         {
-            states = animator.transform.GetComponent<StateManager>();
+            states = animator.transform.GetComponentInParent<StateManager>();
         }
 
         states.CloseMovementCollider(index);
@@ -22,7 +22,7 @@ public class HandleMovementCollider_ASB : StateMachineBehaviour
     {
         if(states == null)
         {
-            states = animator.transform.GetComponent<StateManager>();
+            states = animator.transform.GetComponentInParent<StateManager>();
         }
 
         states.OpenMovementCollider(index);
