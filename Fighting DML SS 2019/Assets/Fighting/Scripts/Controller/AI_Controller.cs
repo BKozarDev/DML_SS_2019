@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class AI_Controller : MonoBehaviour
 {
-    private Movement_Controller move;
 
     #region Variables
+
+    StateManager states;
+    public StateManager enStates;
+
     public float changeStateTolerance = 3; //How close is considered close combat
 
     public float normalRate = 1; //How fast will his AI decide state (normal state)
@@ -26,6 +29,10 @@ public class AI_Controller : MonoBehaviour
 
     bool gotRandom;
     float storeRandom;
+
+    bool checkForBlocking;
+    bool blocking;
+    float blockMultiplier;
 
     bool randomizeAttack;
     int numberOfAttacks;
@@ -51,13 +58,15 @@ public class AI_Controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        move = GetComponent<Movement_Controller>();
+        states = GetComponent<StateManager>();
+
+        AISnapshot.GetInstance().RequestAISnapshot(this);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //CheckDistance();
+        CheckDistance();
         States();
         AIAgent();
     }
@@ -73,12 +82,12 @@ public class AI_Controller : MonoBehaviour
                 NormalState();
                 break;
             case AIState.resetAI:
-                //ResetAI();
+                ResetAI();
                 break;
         }
 
         //Blocking();
-        //Jumping();
+        Jumping();
     }
 
     void AIAgent()
@@ -113,7 +122,7 @@ public class AI_Controller : MonoBehaviour
                 Attack(); //Attack
             } else
             {
-                //Movement();
+                Movement();
             }
         }
     }
@@ -140,31 +149,202 @@ public class AI_Controller : MonoBehaviour
         {
             int attackNumber = Random.Range(0, attackPatterns.Length);
 
-            //StartCoroutine(OpenAttack(attackPatterns[attackNumber], 0));
+            StartCoroutine(OpenAttack(attackPatterns[attackNumber], 0));
 
             curNumAttacks++;
         }
     }
 
+    void Movement()
+    {
+        if (!gotRandom)
+        {
+            storeRandom = ReturnRandom();
+            gotRandom = true;
+        }
+
+        if(storeRandom < 90)
+        {
+            if (enStates.transform.position.x < transform.position.x)
+                states.horizontal = -1;
+            else
+                states.horizontal = 1;
+        } else
+        {
+            if (enStates.transform.position.x < transform.position.x)
+                states.horizontal = 1;
+            else
+                states.horizontal = -1;
+        }
+    }
+
+    void ResetAI()
+    {
+        aiTimer += Time.deltaTime;
+
+        if(aiTimer > aiStateLife)
+        {
+            initiateAI = false;
+            states.horizontal = 0;
+            states.vertical = 0;
+            aiTimer = 0;
+
+            gotRandom = false;
+
+            storeRandom = ReturnRandom();
+            if (storeRandom < 50)
+                aiState = AIState.normalState;
+            else
+                aiState = AIState.closeState;
+
+            curNumAttacks = 1;
+            randomizeAttack = false;
+        }
+    }
+
+    void CheckDistance()
+    {
+        float distance = Vector3.Distance(transform.position, enStates.transform.position);
+
+        if(distance < changeStateTolerance)
+        {
+            if (aiState != AIState.resetAI)
+                aiState = AIState.closeState;
+
+            closeCombat = true;
+        } else
+        {
+            if (aiState != AIState.resetAI)
+                aiState = AIState.normalState;
+
+            if (closeCombat)
+            {
+                if (!gotRandom)
+                {
+                    storeRandom = ReturnRandom();
+                    gotRandom = true;
+                }
+
+                if(storeRandom < 60)
+                {
+                    Movement();
+                }
+            }
+
+            closeCombat = false;
+        }
+    }
+
+    void Blocking()
+    {
+        if (states.gettingHit)
+        {
+            if (!gotRandom)
+            {
+                storeRandom = ReturnRandom();
+                gotRandom = true;
+            }
+
+            if(storeRandom < 50)
+            {
+                blocking = true;
+                states.gettingHit = false;
+            }
+        }
+
+        if (blocking)
+        {
+            blTimer += Time.deltaTime;
+            
+            if(blTimer > blockingRate)
+            {
+                blTimer = 0;
+            }
+        }
+    }
+
     void NormalState()
     {
+        nrmTimer += Time.deltaTime;
 
+        if(nrmTimer > normalRate)
+        {
+            initiateAI = true;
+            nrmTimer = 0;
+        }
     }
 
     void CloseState()
     {
+        clTimer += Time.deltaTime;
 
+        if(clTimer > closeRate)
+        {
+            clTimer = 0;
+            initiateAI = true;
+        }
     }
 
     void Jumping()
     {
+        if (!enStates.onGround)
+        {
+            float ranValue = ReturnRandom();
 
+            if(ranValue < 50)
+            {
+                jump = true;
+            }
+        }
+
+        if (jump)
+        {
+            states.vertical = 1;
+            jRate = ReturnRandom();
+            jump = false;
+        } else
+        {
+            states.vertical = 0;
+        }
+
+        jtimer += Time.deltaTime;
+
+        if(jtimer > jumpRate * 10)
+        {
+            if(jRate < 50)
+            {
+                jump = true;
+            } else
+            {
+                jump = false;
+            }
+
+            jtimer = 0;
+        }
     }
 
     float ReturnRandom()
     {
         float retVal = Random.Range(0, 101);
         return retVal;
+    }
+
+    IEnumerator OpenAttack(AttackPatterns a, int i)
+    {
+        int index = i;
+        float delay = a.attacks[index].delay;
+        states.attack1 = a.attacks[index].attack1;
+        states.attack2 = a.attacks[index].attack2;
+        yield return new WaitForSeconds(delay);
+
+        states.attack1 = false;
+        states.attack2 = false;
+
+        if(index < a.attacks.Length - 1)
+        {
+            index++;
+            StartCoroutine(OpenAttack(a, index));
+        }
     }
 
     [System.Serializable]

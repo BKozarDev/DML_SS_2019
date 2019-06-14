@@ -42,6 +42,18 @@ public class HandleMovement : MonoBehaviour
         if (states.onGround)
         {
             rb.AddForce(new Vector3((states.horizontal * actualSpeed) - rb.velocity.x * this.acceleration, 0));
+
+            if(states.horizontal > 0.5)
+            {
+                anim.anim.SetBool("Move_R", true);
+            } else if(states.horizontal < -0.5)
+            {
+                anim.anim.SetBool("Move_L", true);
+            } else
+            {
+                anim.anim.SetBool("Move_R", false);
+                anim.anim.SetBool("Move_L", false);
+            }
         }
 
         if(states.horizontal == 0 && states.onGround)
@@ -72,7 +84,7 @@ public class HandleMovement : MonoBehaviour
                     jmpTimer += Time.deltaTime;
                     if(jmpTimer < this.jumpDuration / 1000)
                     {
-                        rb.velocity = new Vector3(rb.velocity.x, this.jumpSpeed);
+                        rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, this.jumpSpeed);
                     }
                 }
             }

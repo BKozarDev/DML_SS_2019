@@ -14,6 +14,8 @@ public class HandleDamageColliders : MonoBehaviour
 
     public enum DCtype
     {
+        left_h_up,
+        right_h_up,
         bottom,
         up
     }
@@ -34,6 +36,12 @@ public class HandleDamageColliders : MonoBehaviour
                 break;
             case DCtype.up:
                 StartCoroutine(OpenCollider(damageColliders, 1, delay, damageType));
+                break;
+            case DCtype.left_h_up:
+                StartCoroutine(OpenCollider(damageColliders, 2, delay, damageType));
+                break;
+            case DCtype.right_h_up:
+                StartCoroutine(OpenCollider(damageColliders, 3, delay, damageType));
                 break;
         }
     }

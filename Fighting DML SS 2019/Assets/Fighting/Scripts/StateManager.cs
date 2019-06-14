@@ -22,6 +22,8 @@ public class StateManager : MonoBehaviour
     public bool onGround;
     public bool lookRight;
 
+    public bool dead;
+
     //public Slider healthSlider;
 
     [HideInInspector]
