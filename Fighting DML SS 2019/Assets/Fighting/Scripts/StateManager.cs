@@ -22,6 +22,8 @@ public class StateManager : MonoBehaviour
     public bool onGround;
     public bool lookRight;
 
+    public bool blocking;
+
     public bool dead;
 
     //public Slider healthSlider;
@@ -35,14 +37,19 @@ public class StateManager : MonoBehaviour
 
     public GameObject[] movementColliders;
 
-    ParticleSystem blood;
+    ParticleSystem[] blood;
+
+    public GameObject camera;
+    Camera_Shake shake;
 
     void Start()
     {
+        shake = camera.GetComponent<Camera_Shake>();
+        blood = GetComponentsInChildren<ParticleSystem>();
         handleDC = GetComponent<HandleDamageColliders>();
         handleAnim = GetComponent<HandleAnimations>();
         handleMovement = GetComponent<HandleMovement>();
-        blood = GetComponentInChildren<ParticleSystem>();
+        //blood = GetComponentInChildren<ParticleSystem>();
     }
 
     void FixedUpdate()
@@ -90,7 +97,7 @@ public class StateManager : MonoBehaviour
 
     public void TakeDamage(int damage, HandleDamageColliders.DamageType damageType)
     {
-        if (!gettingHit)
+        if (!gettingHit && !blocking)
         {
             switch (damageType)
             {
@@ -105,13 +112,25 @@ public class StateManager : MonoBehaviour
                     break;
             }
 
-            if(blood != null)
-            {
-                blood.Emit(30);
-            }
 
             health -= damage;
             gettingHit = true;
+            //if(blood != null)
+            //{
+            foreach (ParticleSystem ps in blood)
+                if(ps.gameObject.tag == "Hit")
+                    ps.Emit(30);
+
+            StartCoroutine(shake.Shake(.5f, .2f));
+            //}
+
+        }
+
+        if (blocking)
+        {
+            foreach (ParticleSystem ps in blood)
+                if (ps.gameObject.tag == "Block")
+                    ps.Emit(30);
         }
     }
 

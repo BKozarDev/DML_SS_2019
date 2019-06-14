@@ -9,6 +9,8 @@ TagManager:
   - Ground
   - Hurtbox
   - Hitbox
+  - Hit
+  - Block
   layers:
   - Default
   - TransparentFX

@@ -249,6 +249,7 @@ public class AI_Controller : MonoBehaviour
             {
                 blocking = true;
                 states.gettingHit = false;
+                states.blocking = true;
             }
         }
 
@@ -258,6 +259,7 @@ public class AI_Controller : MonoBehaviour
             
             if(blTimer > blockingRate)
             {
+                states.blocking = false;
                 blTimer = 0;
             }
         }

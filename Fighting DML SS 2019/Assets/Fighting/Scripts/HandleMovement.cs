@@ -49,8 +49,10 @@ public class HandleMovement : MonoBehaviour
             } else if(states.horizontal < -0.5)
             {
                 anim.anim.SetBool("Move_L", true);
+                states.blocking = true;
             } else
             {
+                states.blocking = false;
                 anim.anim.SetBool("Move_R", false);
                 anim.anim.SetBool("Move_L", false);
             }
