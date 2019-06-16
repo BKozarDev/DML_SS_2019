@@ -26,6 +26,8 @@ public class StateManager : MonoBehaviour
 
     public bool dead;
 
+    public bool start;
+
     //public Slider healthSlider;
 
     [HideInInspector]
@@ -42,8 +44,14 @@ public class StateManager : MonoBehaviour
     public GameObject camera;
     Camera_Shake shake;
 
+    public GameObject mat;
+    private float currentY, startTime;
+    private Material _mat;
+
     void Start()
     {
+        _mat = mat.GetComponent<Renderer>().material;
+
         shake = camera.GetComponent<Camera_Shake>();
         blood = GetComponentsInChildren<ParticleSystem>();
         handleDC = GetComponent<HandleDamageColliders>();
@@ -52,14 +60,22 @@ public class StateManager : MonoBehaviour
         //blood = GetComponentInChildren<ParticleSystem>();
     }
 
+    private float speed = 2f;
+
     void FixedUpdate()
     {
-        onGround = isOnGround();
+            onGround = isOnGround();
 
-        if(health <= 0)
-        {
-            handleAnim.anim.Play("Dead");
-        }
+            if (health <= 0)
+            {
+                handleAnim.anim.Play("Dead");
+
+                if (currentY > -4)
+                {
+                    _mat.SetFloat("_DissolveY", currentY);
+                    currentY -= Time.deltaTime * speed;
+                }
+            }
     }
 
     bool isOnGround()
@@ -82,7 +98,7 @@ public class StateManager : MonoBehaviour
         crouch = false;
         gettingHit = false;
         currentlyAttacking = false;
-        dontMove = false;
+        //dontMove = false;
     }
 
     public void CloseMovementCollider(int index)
