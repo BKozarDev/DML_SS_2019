@@ -15,10 +15,7 @@ public class StartingPresent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (fade.activeSelf)
-        {
-            fade.SetActive(true);
-        }
+        fade.SetActive(true);
         bars = GetComponentInChildren<CinematicBars>();
         bars.Show(300, 1);
 
