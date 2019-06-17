@@ -7,11 +7,12 @@ public class StartingPresent : MonoBehaviour
 {
     private CinematicBars bars;
     public GameObject fade;
-
+    public GameObject wall;
     public GameObject player_1, player_2;
 
     private Animator anim;
     Camera cam;
+    private bool skip;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,10 +29,17 @@ public class StartingPresent : MonoBehaviour
         player_2.GetComponent<AI_Controller>().enabled = false;
 
         cam = GetComponentInChildren<Camera>();
+
+        anim.SetInteger("Location", 1);
     }
 
     private void Update()
     {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Camera_Start_Done_Boss1") || skip)
+        {
+            wall.SetActive(false);
+        }
+
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Done"))
         {
             fade.SetActive(false);
@@ -46,6 +54,7 @@ public class StartingPresent : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape)){
             anim.SetTrigger("Skip");
+            skip = true;
         }
     }
 }
