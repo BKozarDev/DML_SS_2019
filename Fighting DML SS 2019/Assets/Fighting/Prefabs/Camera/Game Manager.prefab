@@ -323,10 +323,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3730376174706019012}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177b982ea6a6c4d4e88bd49ea682563e, type: 3}
+  m_Script: {fileID: 11500000, guid: a5dd7c20ad717aa45839aa69c5a698ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fade: {fileID: 3730376173715708690}
+  wall: {fileID: 0}
   player_1: {fileID: 0}
   player_2: {fileID: 0}
 --- !u!95 &3730376174706019033
@@ -339,7 +340,7 @@ Animator:
   m_GameObject: {fileID: 3730376174706019012}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 61cc0b31d68f046419005dc3b2f98f3c, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5d6b9145f7f5f62468938c27d1490173, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -393,6 +394,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3730376174788871864}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c219809eabb749845acbe0463eaa1e5f, type: 3}
+  m_Script: {fileID: 11500000, guid: 01ae24695d5208b4d970cd08cd18b3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
