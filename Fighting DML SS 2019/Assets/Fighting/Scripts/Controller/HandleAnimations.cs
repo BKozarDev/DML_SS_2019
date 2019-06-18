@@ -10,35 +10,48 @@ public class HandleAnimations : MonoBehaviour
     public float attackRate = .3f;
     public AttackBase[] attacks = new AttackBase[2];
 
+    public bool isDead;
+
     // Start is called before the first frame update
     void Start()
     {
         states = GetComponent<StateManager>();
         anim = GetComponent<Animator>();
+        isDead = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        states.dontMove = anim.GetBool("DontMove");
-
-        anim.SetBool("TakesHit", states.gettingHit);
-        anim.SetBool("OnAir", !states.onGround);
-        //anim.SetBool("Crouch", states.crouch);
-
-        float movement = (states.lookRight) ? states.horizontal : -states.horizontal;
-        anim.SetFloat("Movement", movement);
-
-        if (states.vertical < 0)
+        if (!isDead)
         {
-            states.crouch = true;
-        }
-        else
-        {
-            states.crouch = false;
+            states.dontMove = anim.GetBool("DontMove");
+
+            anim.SetBool("TakesHit", states.gettingHit);
+            anim.SetBool("OnAir", !states.onGround);
+            //anim.SetBool("Crouch", states.crouch);
+
+            float movement = (states.lookRight) ? states.horizontal : -states.horizontal;
+            anim.SetFloat("Movement", movement);
+
+            if (states.vertical < 0)
+            {
+                states.crouch = true;
+            }
+            else
+            {
+                states.crouch = false;
+            }
+
+            HandleAttacks();
         }
 
-        HandleAttacks();
+        if (states.dead && !isDead)
+        {
+            anim.Play("Down_B");
+            isDead = true;
+        }
+
     }
 
     void HandleAttacks()

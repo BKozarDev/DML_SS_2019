@@ -27,6 +27,9 @@ public class StateManager : MonoBehaviour
     public bool dead;
 
     public bool start;
+    public bool win;
+
+    public bool _fboss1, _fboss2, _fboss3;
 
     //public Slider healthSlider;
 
@@ -43,6 +46,8 @@ public class StateManager : MonoBehaviour
 
     public GameObject camera;
     Camera_Shake shake;
+
+    public GameObject enemy;
 
     public GameObject mat;
     private float currentY, startTime;
@@ -64,18 +69,15 @@ public class StateManager : MonoBehaviour
 
     void FixedUpdate()
     {
-            onGround = isOnGround();
+        onGround = isOnGround();
 
-            if (health <= 0)
-            {
-                handleAnim.anim.Play("Dead");
-
-                if (currentY > -4)
-                {
-                    _mat.SetFloat("_DissolveY", currentY);
-                    currentY -= Time.deltaTime * speed;
-                }
-            }
+        if (win)
+        {
+            dontMove = true;
+        } else
+        {
+            dontMove = false;
+        }
     }
 
     bool isOnGround()
@@ -98,7 +100,8 @@ public class StateManager : MonoBehaviour
         crouch = false;
         gettingHit = false;
         currentlyAttacking = false;
-        //dontMove = false;
+        dontMove = false;
+        win = false;
     }
 
     public void CloseMovementCollider(int index)
@@ -140,6 +143,7 @@ public class StateManager : MonoBehaviour
             StartCoroutine(shake.Shake(.5f, .2f));
             //}
 
+            
         }
 
         if (blocking)
@@ -154,5 +158,28 @@ public class StateManager : MonoBehaviour
     {
         yield return new WaitForSeconds(timer);
         gettingHit = false;
+        if (health <= 0)
+        {
+            dead = true;
+            enemy.GetComponent<StateManager>().win = true;
+        }
+    }
+
+    void Spare()
+    {
+        handleAnim.anim.Play("Dead");
+
+        if (currentY > -4)
+        {
+            _mat.SetFloat("_DissolveY", currentY);
+            currentY -= Time.deltaTime * speed;
+        }
+
+
+    }
+
+    void Mercy()
+    {
+
     }
 }
