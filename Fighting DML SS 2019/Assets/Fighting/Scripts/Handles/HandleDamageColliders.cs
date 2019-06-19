@@ -16,8 +16,10 @@ public class HandleDamageColliders : MonoBehaviour
     {
         left_h_up,
         right_h_up,
-        bottom,
-        up
+        left_l_down,
+        right_l_down,
+        left_kn_down,
+        right_kn_down
     }
     StateManager states;
 
@@ -31,17 +33,23 @@ public class HandleDamageColliders : MonoBehaviour
     {
         switch (type)
         {
-            case DCtype.bottom:
+            case DCtype.left_l_down:
                 StartCoroutine(OpenCollider(damageColliders, 0, delay, damageType));
                 break;
-            case DCtype.up:
+            case DCtype.right_l_down:
                 StartCoroutine(OpenCollider(damageColliders, 1, delay, damageType));
                 break;
-            case DCtype.left_h_up:
+            case DCtype.left_kn_down:
                 StartCoroutine(OpenCollider(damageColliders, 2, delay, damageType));
                 break;
-            case DCtype.right_h_up:
+            case DCtype.right_kn_down:
                 StartCoroutine(OpenCollider(damageColliders, 3, delay, damageType));
+                break;
+            case DCtype.left_h_up:
+                StartCoroutine(OpenCollider(damageColliders, 4, delay, damageType));
+                break;
+            case DCtype.right_h_up:
+                StartCoroutine(OpenCollider(damageColliders, 5, delay, damageType));
                 break;
         }
     }

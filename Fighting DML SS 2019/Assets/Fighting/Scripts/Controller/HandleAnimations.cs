@@ -37,10 +37,12 @@ public class HandleAnimations : MonoBehaviour
             if (states.vertical < 0)
             {
                 states.crouch = true;
+                anim.SetBool("Crouch", true);
             }
             else
             {
                 states.crouch = false;
+                anim.SetBool("Crouch", false);
             }
 
             HandleAttacks();

@@ -55,7 +55,7 @@ public class StateManager : MonoBehaviour
 
     void Start()
     {
-        _mat = mat.GetComponent<Renderer>().material;
+        //_mat = mat.GetComponent<Renderer>().material;
 
         shake = camera.GetComponent<Camera_Shake>();
         blood = GetComponentsInChildren<ParticleSystem>();
@@ -85,7 +85,7 @@ public class StateManager : MonoBehaviour
         bool retVal = false;
 
         LayerMask layer = ~(1 << gameObject.layer | 1 << 3);
-        retVal = Physics.Raycast(transform.position, -Vector3.up, 0.1f, layer);
+        retVal = Physics.Raycast(transform.position, -Vector3.up, .1f, layer);
 
         return retVal;
     }
@@ -125,7 +125,7 @@ public class StateManager : MonoBehaviour
                     break;
                 case HandleDamageColliders.DamageType.heavy:
                     handleMovement.AddVelocityOnCharacter(
-                        ((!lookRight) ? Vector3.right * -1 : Vector3.right), 0.5f
+                        ((!lookRight) ? Vector3.right : Vector3.right * -1), 0.5f
                         );
                     StartCoroutine(CloseImmortality(1));
                     break;
@@ -140,7 +140,7 @@ public class StateManager : MonoBehaviour
                 if(ps.gameObject.tag == "Hit")
                     ps.Emit(30);
 
-            StartCoroutine(shake.Shake(.5f, .2f));
+            StartCoroutine(shake.Shake(.2f, .2f));
             //}
 
             

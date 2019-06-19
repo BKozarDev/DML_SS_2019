@@ -376,6 +376,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 739161443}
     m_Modifications:
+    - target: {fileID: 4911353719311357652, guid: 26fb34f49076d2a44be9cfcca699db81,
+        type: 3}
+      propertyPath: m_Name
+      value: HitLight
+      objectReference: {fileID: 0}
     - target: {fileID: 7835322760807434927, guid: 26fb34f49076d2a44be9cfcca699db81,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -431,11 +436,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4911353719311357652, guid: 26fb34f49076d2a44be9cfcca699db81,
-        type: 3}
-      propertyPath: m_Name
-      value: HitLight
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26fb34f49076d2a44be9cfcca699db81, type: 3}
 --- !u!1001 &7150109119849588395
@@ -445,11 +445,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 607735765}
     m_Modifications:
-    - target: {fileID: 9186057810230174332, guid: 73933c3c76e156e4fa89c168c8bcfc59,
-        type: 3}
-      propertyPath: m_Name
-      value: RedBeam
-      objectReference: {fileID: 0}
     - target: {fileID: 905075870216558392, guid: 73933c3c76e156e4fa89c168c8bcfc59,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -505,6 +500,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9186057810230174332, guid: 73933c3c76e156e4fa89c168c8bcfc59,
+        type: 3}
+      propertyPath: m_Name
+      value: RedBeam
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73933c3c76e156e4fa89c168c8bcfc59, type: 3}
 --- !u!4 &7150109119849588396 stripped
@@ -520,11 +520,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 739161443}
     m_Modifications:
-    - target: {fileID: 7414178942199595868, guid: 1e42befc1ef4d32428324cfe47af129e,
-        type: 3}
-      propertyPath: m_Name
-      value: BeamOfLight
-      objectReference: {fileID: 0}
     - target: {fileID: 7414178942199595869, guid: 1e42befc1ef4d32428324cfe47af129e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -579,6 +574,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414178942199595868, guid: 1e42befc1ef4d32428324cfe47af129e,
+        type: 3}
+      propertyPath: m_Name
+      value: BeamOfLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414178941662980719, guid: 1e42befc1ef4d32428324cfe47af129e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414178941357702371, guid: 1e42befc1ef4d32428324cfe47af129e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414178941329901592, guid: 1e42befc1ef4d32428324cfe47af129e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e42befc1ef4d32428324cfe47af129e, type: 3}
