@@ -95,16 +95,37 @@ public class HandleAnimations : MonoBehaviour
                     attacks[1].timesPressed = 0;
                 }
             }
+
+            if (states.attack3)
+            {
+                attacks[2].attack = true;
+                attacks[2].attackTimer = 0;
+                attacks[2].timesPressed++;
+            }
+
+            if (attacks[2].attack)
+            {
+                attacks[2].attackTimer += Time.deltaTime;
+
+                if (attacks[2].attackTimer > attackRate || attacks[0].timesPressed >= 3)
+                {
+                    attacks[2].attackTimer = 0;
+                    attacks[2].attack = false;
+                    attacks[2].timesPressed = 0;
+                }
+            }
         }
 
         anim.SetBool("Attack1", attacks[0].attack);
         anim.SetBool("Attack2", attacks[1].attack);
+        anim.SetBool("Attack3", attacks[2].attack);
     }
 
     public void JumpAnim()
     {
         anim.SetBool("Attack1", false);
         anim.SetBool("Attack2", false);
+        anim.SetBool("Attack3", false);
         anim.SetBool("Jump", true);
         StartCoroutine(CloseBoolInAnim("Jump"));
     }
