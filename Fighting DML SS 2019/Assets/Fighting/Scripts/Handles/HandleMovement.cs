@@ -29,15 +29,21 @@ public class HandleMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!states.dontMove && !states.dead && !states.win)
+        if (!states.dead && !states.win)
         {
             HorizontalMovement();
             Jump();
+        } else
+        {
+            anim.anim.SetBool("Move_L", false);
+            anim.anim.SetBool("Move_R", false);
         }
     }
 
     void HorizontalMovement()
     {
+        Debug.Log("On ground?: " + states.onGround + " Player: " + states.gameObject.tag);
+
         actualSpeed = this.maxSpeed;
         if (states.onGround)
         {

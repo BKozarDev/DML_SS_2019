@@ -18,6 +18,11 @@ public class HandleAnimations : MonoBehaviour
         states = GetComponent<StateManager>();
         anim = GetComponent<Animator>();
         isDead = false;
+
+        if (states.lookRight)
+        {
+            anim.SetBool("Player", true);
+        }
     }
 
     // Update is called once per frame

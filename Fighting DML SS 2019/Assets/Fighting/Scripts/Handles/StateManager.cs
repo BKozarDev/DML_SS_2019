@@ -68,6 +68,8 @@ public class StateManager : MonoBehaviour
         handleMovement = GetComponent<HandleMovement>();
         //blood = GetComponentInChildren<ParticleSystem>();
 
+        
+
         spare = false;
         mercy = false;
     }
