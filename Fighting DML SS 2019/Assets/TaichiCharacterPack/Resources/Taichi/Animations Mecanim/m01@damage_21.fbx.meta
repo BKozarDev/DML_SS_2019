@@ -365,10 +365,12 @@ ModelImporter:
     400358: u_lip_center
     7400000: damage_21
     9500000: //RootNode
+
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
+
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -380,10 +382,12 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+
     clipAnimations:
     - serializedVersion: 16
       name: damage_21
       takeName: Take 001
+
       firstFrame: 0
       lastFrame: 34
       wrapMode: 0
@@ -391,6 +395,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
+
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
@@ -767,6 +772,7 @@ ModelImporter:
         weight: 1
       maskType: 0
       maskSource: {instanceID: 0}
+
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -780,6 +786,7 @@ ModelImporter:
     optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
@@ -787,12 +794,14 @@ ModelImporter:
     useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
+
     splitTangentsAcrossUV: 1
     normalImportMode: 0
     tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 1
   humanDescription:
+
     human:
     - boneName: Hips
       humanName: Hips
@@ -1888,6 +1897,7 @@ ModelImporter:
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 0f4d3b4cbf56b1b43b75648d868b831e,
     type: 3}
   animationType: 3
+
   additionalBone: 0
   userData: 
   assetBundleName: 
