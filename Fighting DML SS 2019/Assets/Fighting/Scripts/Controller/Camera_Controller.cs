@@ -16,15 +16,24 @@ public class Camera_Controller : MonoBehaviour
     private Vector3 velocity;
     private Camera cam;
 
+    StateManager p1, p2;
+
+    bool win;
+
     private void Start()
     {
         GameObject player1 = GameObject.FindGameObjectWithTag("Player1");
         GameObject player2 = GameObject.FindGameObjectWithTag("Player2");
 
+        p1 = player1.GetComponent<StateManager>();
+        p2 = player2.GetComponent<StateManager>();
+
         targets.Add(player1.transform);
         targets.Add(player2.transform);
 
         cam = GetComponent<Camera>();
+
+        win = false;
     }
 
     private void LateUpdate()
@@ -35,6 +44,22 @@ public class Camera_Controller : MonoBehaviour
 
         UpdateMove();
         UpdateZoom();
+
+        if (p1.win && !win)
+        {
+            targets.RemoveAt(0);
+            win = true;
+        } else if(p2.win && !win)
+        {
+            targets.RemoveAt(1);
+            win = true;
+        }
+
+        if (win)
+        {
+            offset = new Vector3(0, 2, -5.8f);
+            maxZoom = 10;
+        }
     }
 
     void UpdateZoom()

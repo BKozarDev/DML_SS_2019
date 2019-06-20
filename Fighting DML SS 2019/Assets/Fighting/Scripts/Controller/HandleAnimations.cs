@@ -46,6 +46,12 @@ public class HandleAnimations : MonoBehaviour
             }
 
             HandleAttacks();
+        } else
+        {
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                Spare();
+            }
         }
 
         if (states.dead && !isDead)
@@ -53,7 +59,11 @@ public class HandleAnimations : MonoBehaviour
             anim.Play("Down_B");
             isDead = true;
         }
+    }
 
+    void Spare()
+    {
+        anim.SetBool("Spare", true);
     }
 
     void HandleAttacks()

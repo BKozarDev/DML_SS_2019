@@ -39,6 +39,10 @@ public class StateManager : MonoBehaviour
     public HandleAnimations handleAnim;
     [HideInInspector]
     public HandleMovement handleMovement;
+    
+    public bool spare;
+    [HideInInspector]
+    public bool mercy;
 
     public GameObject[] movementColliders;
 
@@ -63,6 +67,9 @@ public class StateManager : MonoBehaviour
         handleAnim = GetComponent<HandleAnimations>();
         handleMovement = GetComponent<HandleMovement>();
         //blood = GetComponentInChildren<ParticleSystem>();
+
+        spare = false;
+        mercy = false;
     }
 
     private float speed = 2f;
@@ -85,7 +92,9 @@ public class StateManager : MonoBehaviour
         bool retVal = false;
 
         LayerMask layer = ~(1 << gameObject.layer | 1 << 3);
-        retVal = Physics.Raycast(transform.position, -Vector3.up, .1f, layer);
+        retVal = Physics.Raycast(transform.position, -Vector3.up, 0.15f, layer);
+
+        Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up), Color.blue);
 
         return retVal;
     }
@@ -125,7 +134,7 @@ public class StateManager : MonoBehaviour
                     break;
                 case HandleDamageColliders.DamageType.heavy:
                     handleMovement.AddVelocityOnCharacter(
-                        ((!lookRight) ? Vector3.right : Vector3.right * -1), 0.5f
+                        ((!lookRight) ? Vector3.right * -1 : Vector3.right), 0.5f
                         );
                     StartCoroutine(CloseImmortality(1));
                     break;
@@ -167,15 +176,9 @@ public class StateManager : MonoBehaviour
 
     void Spare()
     {
-        handleAnim.anim.Play("Dead");
+        
 
-        if (currentY > -4)
-        {
-            _mat.SetFloat("_DissolveY", currentY);
-            currentY -= Time.deltaTime * speed;
-        }
-
-
+        //end round
     }
 
     void Mercy()
