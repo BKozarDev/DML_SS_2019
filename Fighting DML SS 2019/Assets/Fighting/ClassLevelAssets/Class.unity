@@ -1313,7 +1313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -50, y: 40}
+  m_AnchoredPosition: {x: -89.8, y: 67.6}
   m_SizeDelta: {x: 88.93, y: 11.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &260753497
@@ -4073,11 +4073,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1822104335}
     m_Modifications:
-    - target: {fileID: 4661446983581181688, guid: 953b8c309f9da51448faa9fb078c8497,
-        type: 3}
-      propertyPath: m_Name
-      value: Green
-      objectReference: {fileID: 0}
     - target: {fileID: 1897351575641284861, guid: 953b8c309f9da51448faa9fb078c8497,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4132,6 +4127,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4661446983581181688, guid: 953b8c309f9da51448faa9fb078c8497,
+        type: 3}
+      propertyPath: m_Name
+      value: Green
       objectReference: {fileID: 0}
     - target: {fileID: 259189117, guid: 953b8c309f9da51448faa9fb078c8497, type: 3}
       propertyPath: players.Array.data[0]
@@ -4210,11 +4210,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1822104335}
     m_Modifications:
-    - target: {fileID: 2865265530903715156, guid: 1bad7b5ef38e2c348a4e1b4c98b241a5,
-        type: 3}
-      propertyPath: m_Name
-      value: RedDude
-      objectReference: {fileID: 0}
     - target: {fileID: 1267813911885328199, guid: 1bad7b5ef38e2c348a4e1b4c98b241a5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4269,6 +4264,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865265530903715156, guid: 1bad7b5ef38e2c348a4e1b4c98b241a5,
+        type: 3}
+      propertyPath: m_Name
+      value: RedDude
       objectReference: {fileID: 0}
     - target: {fileID: 278334696, guid: 1bad7b5ef38e2c348a4e1b4c98b241a5, type: 3}
       propertyPath: players.Array.data[0]
