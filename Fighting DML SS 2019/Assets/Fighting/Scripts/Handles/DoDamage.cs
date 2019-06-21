@@ -6,11 +6,17 @@ public class DoDamage : MonoBehaviour
 {
     StateManager states;
 
+    public AudioClip clip;
+
+    AudioSource aSource;
+
     public HandleDamageColliders.DamageType damageType;
 
     private void Start()
     {
         states = GetComponentInParent<StateManager>();
+        aSource = GetComponent<AudioSource>();
+        aSource.clip = clip;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,6 +30,7 @@ public class DoDamage : MonoBehaviour
                 if (!oState.currentlyAttacking)
                 {
                     oState.TakeDamage(5, damageType);
+                    aSource.Play();
                 }
             }
         }

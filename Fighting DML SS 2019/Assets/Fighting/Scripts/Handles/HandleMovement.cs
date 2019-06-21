@@ -42,8 +42,6 @@ public class HandleMovement : MonoBehaviour
 
     void HorizontalMovement()
     {
-        Debug.Log("On ground?: " + states.onGround + " Player: " + states.gameObject.tag);
-
         actualSpeed = this.maxSpeed;
         if (states.onGround)
         {

@@ -13,29 +13,43 @@ public class StartingPresent : MonoBehaviour
     private Animator anim;
     Camera cam;
     private bool skip;
+
+    LevelManager lm;
+    LevelUI levelUI;
+
     // Start is called before the first frame update
     void Start()
     {
+        levelUI = LevelUI.GetInstance();
+
+        levelUI.AnnouncerTextLine.gameObject.SetActive(false);
+        levelUI.healthSliders[0].gameObject.SetActive(false);
+        levelUI.healthSliders[1].gameObject.SetActive(false);
+        levelUI.LevelTimer.gameObject.SetActive(false);
+
         fade.SetActive(true);
         bars = GetComponentInChildren<CinematicBars>();
-        bars.Show(300, 1);
+        bars.Show(200, 1);
 
         anim = GetComponent<Animator>();
 
         //player_1.GetComponent<StateManager>().dontMove = true;
         //player_2.GetComponent<StateManager>().dontMove = true;
 
-        player_1.GetComponent<InputHandle>().enabled = false;
-        player_2.GetComponent<AI_Controller>().enabled = false;
+        DisableFighters();
+
 
         cam = GetComponentInChildren<Camera>();
+        lm = GetComponent<LevelManager>();
+        lm.enabled = false;
+
 
         anim.SetInteger("Location", 1);
     }
 
     private void Update()
     {
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Camera_Start_Done_Boss1") || skip)
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Camera_Start_Done_Boss1") || skip || anim.GetCurrentAnimatorStateInfo(0).IsName("Done"))
         {
             wall.SetActive(false);
         }
@@ -46,8 +60,11 @@ public class StartingPresent : MonoBehaviour
             cam.enabled = false;
             bars.Hide(1);
 
-            player_1.GetComponent<InputHandle>().enabled = true;
-            player_2.GetComponent<AI_Controller>().enabled = true;
+            lm.enabled = true;
+            levelUI.healthSliders[0].gameObject.SetActive(true);
+            levelUI.healthSliders[1].gameObject.SetActive(true);
+            levelUI.LevelTimer.gameObject.SetActive(true);
+
             //player_2.GetComponent<StateManager>().dontMove = false;
             //player_1.GetComponent<StateManager>().dontMove = false;
         }
@@ -56,5 +73,17 @@ public class StartingPresent : MonoBehaviour
             anim.SetTrigger("Skip");
             skip = true;
         }
+    }
+
+    public void DisableFighters()
+    {
+        player_1.GetComponent<InputHandle>().enabled = false;
+        player_2.GetComponent<AI_Controller>().enabled = false;
+    }
+
+    public void EnableFighters()
+    {
+        player_1.GetComponent<InputHandle>().enabled = true;
+        player_2.GetComponent<AI_Controller>().enabled = true;
     }
 }

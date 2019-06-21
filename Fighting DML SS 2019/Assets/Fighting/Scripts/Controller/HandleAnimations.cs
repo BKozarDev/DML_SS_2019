@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HandleAnimations : MonoBehaviour
 {
@@ -12,11 +13,16 @@ public class HandleAnimations : MonoBehaviour
 
     public bool isDead;
 
+    public AudioClip clip;
+    AudioSource aSource;
+
     // Start is called before the first frame update
     void Start()
     {
         states = GetComponent<StateManager>();
         anim = GetComponent<Animator>();
+        aSource = GetComponent<AudioSource>();
+        aSource.clip = clip;
         isDead = false;
 
         if (states.lookRight)
@@ -56,6 +62,13 @@ public class HandleAnimations : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.K))
             {
                 Spare();
+                StartCoroutine(Restart());
+            }
+
+            if (Input.GetKeyDown(KeyCode.M))
+            {
+                Mercy();
+                StartCoroutine(Restart());
             }
         }
 
@@ -66,9 +79,21 @@ public class HandleAnimations : MonoBehaviour
         }
     }
 
+    IEnumerator Restart()
+    {
+        yield return new WaitForSeconds(6);
+
+        SceneManager.LoadScene(1);
+    }
+
     void Spare()
     {
         anim.SetBool("Spare", true);
+    }
+
+    void Mercy()
+    {
+        anim.SetBool("Mercy", true);
     }
 
     void HandleAttacks()
@@ -77,6 +102,7 @@ public class HandleAnimations : MonoBehaviour
         {
             if (states.attack1)
             {
+                aSource.Play();
                 attacks[0].attack = true;
                 attacks[0].attackTimer = 0;
                 attacks[0].timesPressed++;
@@ -96,6 +122,7 @@ public class HandleAnimations : MonoBehaviour
 
             if (states.attack2)
             {
+                aSource.Play();
                 attacks[1].attack = true;
                 attacks[1].attackTimer = 0;
                 attacks[1].timesPressed++;
@@ -115,6 +142,7 @@ public class HandleAnimations : MonoBehaviour
 
             if (states.attack3)
             {
+                aSource.Play();
                 attacks[2].attack = true;
                 attacks[2].attackTimer = 0;
                 attacks[2].timesPressed++;

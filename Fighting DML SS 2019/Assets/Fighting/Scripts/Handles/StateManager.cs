@@ -31,6 +31,10 @@ public class StateManager : MonoBehaviour
 
     public bool _fboss1, _fboss2, _fboss3;
 
+    public Slider healthSlider;
+
+    public AudioClip clip;
+
     //public Slider healthSlider;
 
     [HideInInspector]
@@ -56,11 +60,11 @@ public class StateManager : MonoBehaviour
     public GameObject mat;
     private float currentY, startTime;
     private Material _mat;
-
+    AudioSource source;
     void Start()
     {
         //_mat = mat.GetComponent<Renderer>().material;
-
+        source = GetComponent<AudioSource>();
         shake = camera.GetComponent<Camera_Shake>();
         blood = GetComponentsInChildren<ParticleSystem>();
         handleDC = GetComponent<HandleDamageColliders>();
@@ -86,6 +90,11 @@ public class StateManager : MonoBehaviour
         } else
         {
             dontMove = false;
+        }
+
+        if(healthSlider != null)
+        {
+            healthSlider.value = health;
         }
     }
 
@@ -171,20 +180,10 @@ public class StateManager : MonoBehaviour
         gettingHit = false;
         if (health <= 0)
         {
+            source.clip = clip;
+            source.Play();
             dead = true;
             enemy.GetComponent<StateManager>().win = true;
         }
-    }
-
-    void Spare()
-    {
-        
-
-        //end round
-    }
-
-    void Mercy()
-    {
-
     }
 }
