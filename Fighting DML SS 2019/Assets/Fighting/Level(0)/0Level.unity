@@ -2654,6 +2654,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: cd47f1e9be18a904d8641df78e2b0231, type: 2}
+    - target: {fileID: 1839860815, guid: 12cdd9414b35de44da31fa23d82d6b8c, type: 3}
+      propertyPath: m_Value
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 1956946527, guid: 12cdd9414b35de44da31fa23d82d6b8c, type: 3}
       propertyPath: enName
       value: Mitsuka
@@ -2673,6 +2677,14 @@ PrefabInstance:
     - target: {fileID: 228990114, guid: 12cdd9414b35de44da31fa23d82d6b8c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1839860814, guid: 12cdd9414b35de44da31fa23d82d6b8c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2141261927, guid: 12cdd9414b35de44da31fa23d82d6b8c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12cdd9414b35de44da31fa23d82d6b8c, type: 3}

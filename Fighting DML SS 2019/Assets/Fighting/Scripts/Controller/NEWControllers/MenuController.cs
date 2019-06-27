@@ -45,6 +45,9 @@ public class MenuController : MonoBehaviour
         } else if (Input.GetKeyDown(KeyCode.X))
         {
             id = 2;
+        } else if (Input.GetKeyDown(KeyCode.C))
+        {
+            id = 3;
         } else
         {
             id = RandomMap();
@@ -105,7 +108,7 @@ public class MenuController : MonoBehaviour
 
     int RandomMap()
     {
-        var rand = Random.Range(1, 2);
+        var rand = UnityEngine.Random.Range(1, 3);
         Debug.Log(rand);
 
         return rand;
